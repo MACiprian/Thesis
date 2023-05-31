@@ -24,6 +24,20 @@ services:
     env_file:
       - influxdb/influxdb.env
 
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    depends_on:
+      - influxdb
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    networks:
+      - database-network
+
   mock-client:
     build: ./mock-client
     environment:
@@ -39,3 +53,4 @@ networks:
 
 volumes:
   influxdb-storage:
+  grafana-storage:
