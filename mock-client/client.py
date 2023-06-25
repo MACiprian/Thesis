@@ -1,19 +1,28 @@
-import os
+import sys
 import time
 import requests
 import random
 
 
-if __name__ == '__main__':
-    SERVER_URL=os.getenv('SERVER_URL', '')
-    if not SERVER_URL:
-        raise Exception('SERVER_URL not set')
+if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print(f"{sys.argv[0]} name IP port", file=sys.stderr)
+        exit(-1)
+
+    reporter = sys.argv[1]
+    url = sys.argv[2]
+    port = sys.argv[3]
 
     while True:
         post_data = {
+            "reporter": reporter,
             "temp": 22 + random.random(),
             "humidity": 51 + random.random() * 3,
-            "heatIndex": 24 + random.random() * 2
+            "heatIndex": 24 + random.random() * 2,
         }
-        requests.post(SERVER_URL + "/data", json=post_data)
+        try:
+            requests.post(f"http://{url}:{port}/data", json=post_data)
+        except:
+            print(f"POST on http://{url}:{port}/data failed.", file=sys.stderr)
+            exit(0)
         time.sleep(2)
