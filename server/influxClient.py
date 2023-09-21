@@ -22,6 +22,10 @@ def addDataToInflux(json_data, influx_client):
     if not all(field in json_data for field in required_fields):
         return False
 
+    json_data['temp'] = float(json_data['temp'])
+    json_data['humidity'] = float(json_data['humidity'])
+    json_data['heatIndex'] = float(json_data['heatIndex'])
+
     influx_metric = [
         {"measurement": "DroneMetrics", "time": datetime.utcnow(), "fields": json_data}
     ]

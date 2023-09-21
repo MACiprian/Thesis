@@ -1,0 +1,4 @@
+SELECT MEAN("temp") AS "average_temperature"
+FROM "DroneMetrics"
+WHERE time >= now() - 30m
+GROUP BY time(30s) fill(null)
