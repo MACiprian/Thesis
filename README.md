@@ -55,5 +55,3 @@ It is setup to load both the InfluxDB datasource and the Dro-N dashboard on star
 
 The mock-client is not a core part of the application, it rather is a tool to test the cluster in a confined environment.
 Other than safe-guarding against bugs, it can be used for benchmarking.
-# Thesis
-# Thesis
